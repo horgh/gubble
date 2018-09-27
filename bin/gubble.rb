@@ -73,7 +73,5 @@ def get_args
 	return args
 end
 
-if main
-	exit true
-end
+exit true if main
 exit false
