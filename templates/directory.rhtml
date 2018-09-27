@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title><%= h(external_path) %>/ - Gubble</title>
+<h1><%= h(external_path) %>/</h1>
+<ul>
+	<% files.each do |f| %>
+		<li>
+			<a href="view?page=<%= h(u(f[:name])) %>">
+				<%= h(f[:name]) %><% if f[:type] == 'dir' %>/<% end %>
+			</a>
+		</li>
+	<% end %>
+</ul>
