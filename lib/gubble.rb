@@ -3,7 +3,8 @@ require 'erb'
 class Gubble
 	include ERB::Util
 
-	def initialize(data_dir, template_dir, req, res)
+	def initialize(url_path, data_dir, template_dir, req, res)
+		@url_path = url_path
 		@data_dir = data_dir
 		@template_dir = template_dir
 		@request = req
@@ -11,15 +12,16 @@ class Gubble
 	end
 
 	def run
-		if @request.request_method == 'GET' && @request.path == '/'
+		if @request.request_method == 'GET' &&
+				(@request.path == @url_path+'/' || @request.path == @url_path)
 			@response.set_redirect(
 				WEBrick::HTTPStatus::TemporaryRedirect,
-				"/view?page=#{u('/')}",
+				@url_path+"/view?page=#{u('/')}",
 			)
 			return
 		end
 
-		if @request.request_method == 'GET' && @request.path == '/view'
+		if @request.request_method == 'GET' && @request.path == @url_path+'/view'
 			view
 			return
 		end

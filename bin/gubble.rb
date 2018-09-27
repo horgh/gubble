@@ -13,7 +13,13 @@ def main
 	server = WEBrick::HTTPServer.new :Port => args[:port]
 	trap 'INT' do server.shutdown end
 	server.mount_proc '/' do |req, res|
-		Gubble.new(args[:data_dir], args[:template_dir], req, res).run
+		Gubble.new(
+			args[:path],
+			args[:data_dir],
+			args[:template_dir],
+			req,
+			res,
+		).run
 	end
 	server.start
 
@@ -22,10 +28,16 @@ end
 
 def get_args
 	args = {
+		path: '',
 		port: 8081,
 	}
 	OptionParser.new do |opts|
 		opts.banner = "Usage: #{$0} [options]"
+		opts.on(
+			'-a',
+			'--path PATH',
+			'URL path to Gubble. If you want it to be reachable at /gubble instead of /, use this',
+		) { |v| args[:path] = v }
 		opts.on(
 			'-d',
 			'--data-dir DIR',
