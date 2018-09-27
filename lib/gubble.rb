@@ -40,7 +40,8 @@ class Gubble
 			return
 		end
 
-		if /[^a-zA-Z0-9_\/ .-]/.match(external_path)
+		external_path = normalize_path(external_path)
+		if external_path.nil?
 			@response.status = 400
 			@response.body = 'Invalid file' # TODO(horgh): template
 			return
@@ -61,6 +62,20 @@ class Gubble
 
 		render_file(fs_path, external_path)
 		return
+	end
+
+	def normalize_path(external_path)
+		if /[^a-zA-Z0-9_\/ .-]/.match(external_path)
+			return nil
+		end
+
+		if /\.\./.match(external_path)
+			return nil
+		end
+
+		external_path = '' if external_path == '/'
+
+		return external_path
 	end
 
 	def render_dir(fs_path, external_path)
