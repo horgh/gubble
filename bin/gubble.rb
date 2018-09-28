@@ -5,7 +5,7 @@ require 'optparse'
 require 'webrick'
 
 def main
-  args = get_args
+  args = parse_args
   return false if args.nil?
 
   server = WEBrick::HTTPServer.new Port: args[:port]
@@ -24,7 +24,7 @@ def main
   true
 end
 
-def get_args
+def parse_args
   args = {
     path: '',
     port: 8081,
