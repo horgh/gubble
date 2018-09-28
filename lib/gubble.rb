@@ -1,5 +1,7 @@
 require 'erb'
 
+# Gubble takes an HTTP request and replies to it. It is the controller for
+# the site.
 class Gubble
   include ERB::Util
 
