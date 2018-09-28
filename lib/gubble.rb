@@ -13,7 +13,7 @@ class Gubble
 
   def run
     if @request.request_method == 'GET' &&
-        (@request.path == @url_path+'/' || @request.path == @url_path)
+       (@request.path == @url_path+'/' || @request.path == @url_path)
       @response.set_redirect(
         WEBrick::HTTPStatus::TemporaryRedirect,
         @url_path+"/view?page=#{u('/')}",
@@ -103,7 +103,7 @@ class Gubble
   def render_page(name, binding)
     @response.content_type = 'text/html; charset=utf-8'
     @response.body = render_template('_header.rhtml', binding) +
-      render_template(name, binding)
+                     render_template(name, binding)
     return
   end
 
