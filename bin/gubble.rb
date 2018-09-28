@@ -64,10 +64,6 @@ def parse_args
     return nil
   end
 
-  if !args.key?(:port)
-    STDERR.puts 'You must provide a port.'
-    return nil
-  end
   args[:port] = args[:port].to_i
   if args[:port] <= 0
     STDERR.puts 'Invalid port.'
