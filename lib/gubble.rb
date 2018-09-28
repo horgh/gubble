@@ -85,6 +85,7 @@ class Gubble
 				external_path: entry_external_path,
 			}
 		end
+		files.sort! { |a, b| a[:name] <=> b[:name] }
 		render_template('directory.rhtml', binding)
 		return
 	end
