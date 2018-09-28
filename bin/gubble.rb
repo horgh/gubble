@@ -71,6 +71,7 @@ def get_args
   args[:port] = args[:port].to_i
   if args[:port] <= 0
     STDERR.puts 'Invalid port.'
+    return nil
   end
 
   if !args.key?(:template_dir)
