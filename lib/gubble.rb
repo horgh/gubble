@@ -86,16 +86,8 @@ class Gubble
 			next if entry[0] == '.'
 			entry_fs_path = File.join(fs_path, entry)
 			entry_external_path = File.join(external_path, entry)
-
-			if Dir.exist?(entry_fs_path)
-				files << {
-					dir:           true,
-					name:          entry,
-					external_path: entry_external_path,
-				}
-				next
-			end
 			files << {
+				is_dir:        Dir.exist?(entry_fs_path),
 				name:          entry,
 				external_path: entry_external_path,
 			}
