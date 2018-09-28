@@ -57,7 +57,7 @@ def get_args
   end.parse!
   # rubocop:enable Metrics/LineLength
 
-  if !args.has_key?(:data_dir)
+  if !args.key?(:data_dir)
     STDERR.puts 'You must provide a data directory.'
     return nil
   end
@@ -66,7 +66,7 @@ def get_args
     return nil
   end
 
-  if !args.has_key?(:port)
+  if !args.key?(:port)
     STDERR.puts 'You must provide a port.'
     return nil
   end
@@ -75,7 +75,7 @@ def get_args
     STDERR.puts 'Invalid port.'
   end
 
-  if !args.has_key?(:template_dir)
+  if !args.key?(:template_dir)
     STDERR.puts 'You must provide a template directory.'
     return nil
   end
