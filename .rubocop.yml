@@ -1,0 +1,21 @@
+inherit_from: .rubocop_todo.yml
+
+# Disagree.
+Style/NegatedIf:
+  Enabled: false
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+Style/TrailingCommaInArguments:
+  Enabled: false
+Style/RegexpLiteral:
+  Enabled: false
+
+# Arbitrary.
+Metrics/AbcSize:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
