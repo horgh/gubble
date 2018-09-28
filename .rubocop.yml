@@ -7,6 +7,8 @@ Style/TrailingCommaInHashLiteral:
   Enabled: false
 Style/TrailingCommaInArguments:
   Enabled: false
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
 Style/RegexpLiteral:
   Enabled: false
 
