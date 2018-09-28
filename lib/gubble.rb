@@ -86,13 +86,22 @@ class Gubble
 			}
 		end
 		files.sort! { |a, b| a[:name] <=> b[:name] }
-		render_template('directory.rhtml', binding)
+		title = external_path
+		render_page('directory.rhtml', binding)
 		return
 	end
 
 	def render_file(fs_path, external_path)
 		contents = File.read(fs_path)
-		render_template('file.rhtml', binding)
+		title = external_path
+		render_page('file.rhtml', binding)
+		return
+	end
+
+	def render_page(name, binding)
+		@response.content_type = 'text/html; charset=utf-8'
+		@response.body = render_template('_header.rhtml', binding) +
+			render_template(name, binding)
 		return
 	end
 
@@ -102,8 +111,6 @@ class Gubble
 				File.join(@template_dir, name),
 			),
 		)
-		@response.content_type = 'text/html; charset=utf-8'
-		@response.body = erb.result(binding)
-		return
+		return erb.result(binding)
 	end
 end
