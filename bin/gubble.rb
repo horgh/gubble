@@ -31,6 +31,7 @@ def get_args
     path: '',
     port: 8081,
   }
+  # rubocop:disable Metrics/LineLength
   OptionParser.new do |opts|
     opts.banner = "Usage: #{$0} [options]"
     opts.on(
@@ -54,6 +55,7 @@ def get_args
       'Directory containing template files',
     ) { |v| args[:template_dir] = v }
   end.parse!
+  # rubocop:enable Metrics/LineLength
 
   if !args.has_key?(:data_dir)
     STDERR.puts 'You must provide a data directory.'
