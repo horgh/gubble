@@ -33,7 +33,7 @@ class Gubble
   private
 
   def view
-    external_path = @request.query()['page']
+    external_path = @request.query['page']
 
     if external_path.nil?
       render_error(400, 'No page specified')

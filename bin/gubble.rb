@@ -5,7 +5,7 @@ require 'optparse'
 require 'webrick'
 
 def main
-  args = get_args()
+  args = get_args
   if args.nil?
     return false
   end
