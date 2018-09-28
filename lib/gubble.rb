@@ -65,8 +65,8 @@ class Gubble
   end
 
   def normalize_path(external_path)
-    return nil if /[^a-zA-Z0-9_\/ .-]/.match(external_path)
-    return nil if /\.\./.match(external_path)
+    return nil if external_path =~ /[^a-zA-Z0-9_\/ .-]/
+    return nil if external_path =~ /\.\./
     external_path
   end
 
