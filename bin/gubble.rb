@@ -23,7 +23,7 @@ def main
   end
   server.start
 
-  return true
+  true
 end
 
 def get_args
@@ -84,7 +84,7 @@ def get_args
     return nil
   end
 
-  return args
+  args
 end
 
 exit true if main

@@ -27,7 +27,7 @@ class Gubble
     end
 
     render_error(400, 'Invalid request')
-    return
+    nil
   end
 
   private
@@ -59,13 +59,13 @@ class Gubble
     end
 
     render_file(fs_path, external_path)
-    return
+    nil
   end
 
   def normalize_path(external_path)
     return nil if /[^a-zA-Z0-9_\/ .-]/.match(external_path)
     return nil if /\.\./.match(external_path)
-    return external_path
+    external_path
   end
 
   def render_dir(fs_path, external_path)
@@ -83,28 +83,28 @@ class Gubble
     files.sort! { |a, b| a[:name] <=> b[:name] }
     title = external_path
     render_page('directory.rhtml', binding)
-    return
+    nil
   end
 
   def render_file(fs_path, external_path)
     contents = File.read(fs_path)
     title = external_path
     render_page('file.rhtml', binding)
-    return
+    nil
   end
 
   def render_error(status, message)
     @response.status = status
     title = 'Error'
     render_page('error.rhtml', binding)
-    return
+    nil
   end
 
   def render_page(name, binding)
     @response.content_type = 'text/html; charset=utf-8'
     @response.body = render_template('_header.rhtml', binding) +
                      render_template(name, binding)
-    return
+    nil
   end
 
   def render_template(name, binding)
@@ -113,6 +113,6 @@ class Gubble
         File.join(@template_dir, name),
       ),
     )
-    return erb.result(binding)
+    erb.result(binding)
   end
 end
