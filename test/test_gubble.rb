@@ -65,6 +65,71 @@ class GubbleTest < Minitest::Test
     )
   end
 
+  def test_subdir
+    @request.path = '/view'
+    @request.query['page'] = '/dir1'
+    @gubble.run
+    assert_equal 200, @response.status
+    assert_equal(
+      [
+        {
+          href:    'view?page=%2Fdir1%2Fone.txt',
+          content: 'one.txt',
+        },
+        {
+          href:    'view?page=%2Fdir1%2Ftwo.txt',
+          content: 'two.txt',
+        },
+      ],
+      parse_links,
+    )
+  end
+
+  def test_page
+    @request.path = '/view'
+    @request.query['page'] = '/dir1/one.txt'
+    @gubble.run
+    assert_equal 200, @response.status
+    assert_equal(
+      'hi there',
+      Nokogiri::HTML(@response.body).css('#content')[0].content.strip,
+    )
+  end
+
+  def test_traversal_fails
+    pages = [
+      '/dir1/..',
+      '/dir1/../dir1/one.txt',
+    ]
+    pages.each do |page|
+      setup
+      @request.path = '/view'
+      @request.query['page'] = page
+      @gubble.run
+      assert_equal 400, @response.status
+    end
+  end
+
+  def test_nonexisting_file
+    @request.path = '/view'
+    @request.query['page'] = '/dir1/dne.txt'
+    @gubble.run
+    assert_equal 404, @response.status
+  end
+
+  def test_missing_page_param
+    @request.path = '/view'
+    @gubble.run
+    assert_equal 400, @response.status
+  end
+
+  def test_bad_character
+    @request.path = '/view'
+    @request.query['page'] = '/dir1/hi!.txt'
+    @gubble.run
+    assert_equal 400, @response.status
+  end
+
   def parse_links
     links = []
     doc = Nokogiri::HTML(@response.body)
