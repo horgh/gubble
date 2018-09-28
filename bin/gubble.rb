@@ -33,7 +33,7 @@ def get_args
   }
   # rubocop:disable Metrics/LineLength
   OptionParser.new do |opts|
-    opts.banner = "Usage: #{$0} [options]"
+    opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
     opts.on(
       '-a',
       '--path PATH',
