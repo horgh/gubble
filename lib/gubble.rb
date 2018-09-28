@@ -6,6 +6,8 @@ require 'webrick'
 class Gubble
   include ERB::Util
 
+  attr_accessor :url_path # For testing
+
   def initialize(url_path, data_dir, template_dir, req, res)
     @url_path = url_path
     @data_dir = data_dir
