@@ -1,4 +1,5 @@
 require 'erb'
+require 'webrick'
 
 # Gubble takes an HTTP request and replies to it. It is the controller for
 # the site.
