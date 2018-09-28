@@ -92,9 +92,6 @@ class Gubble
 				external_path: entry_external_path,
 			}
 		end
-
-		external_path = '' if external_path == '/'
-
 		render_template('directory.rhtml', binding)
 		return
 	end
