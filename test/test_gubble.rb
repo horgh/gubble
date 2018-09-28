@@ -50,14 +50,6 @@ class GubbleTest < Minitest::Test
     @request.query['page'] = '/'
     @gubble.run
     assert_equal 200, @response.status
-    links = []
-    doc = Nokogiri::HTML(@response.body)
-    doc.css('li a').each do |link|
-      links << {
-        href:    link['href'],
-        content: link.content.gsub(/\s+/, ' ').strip,
-      }
-    end
     assert_equal(
       [
         {
@@ -69,7 +61,19 @@ class GubbleTest < Minitest::Test
           content: 'dir2',
         },
       ],
-      links,
+      parse_links,
     )
+  end
+
+  def parse_links
+    links = []
+    doc = Nokogiri::HTML(@response.body)
+    doc.css('li a').each do |link|
+      links << {
+        href:    link['href'],
+        content: link.content.gsub(/\s+/, ' ').strip,
+      }
+    end
+    links
   end
 end
