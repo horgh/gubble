@@ -30,7 +30,7 @@ class Gubble
 		return
 	end
 
-	private
+	 private
 
 	def view
 		external_path = @request.query()['page']
