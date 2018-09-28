@@ -9,7 +9,7 @@ def main
   return false if args.nil?
 
   server = WEBrick::HTTPServer.new Port: args[:port]
-  trap 'INT' do server.shutdown end
+  trap('INT') { server.shutdown }
   server.mount_proc '/' do |req, res|
     Gubble.new(
       args[:path],
