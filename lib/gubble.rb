@@ -84,18 +84,20 @@ class Gubble
 		files = []
 		Dir.foreach(fs_path) do |entry|
 			next if entry[0] == '.'
-			entry_path = File.join(fs_path, entry)
+			entry_fs_path = File.join(fs_path, entry)
+			entry_external_path = File.join(external_path, entry)
 
-			if Dir.exist?(entry_path)
+			if Dir.exist?(entry_fs_path)
 				files << {
-					name: entry,
-					type: 'dir',
+					dir:           true,
+					name:          entry,
+					external_path: entry_external_path,
 				}
 				next
 			end
 			files << {
-				name: entry,
-				type: 'file',
+				name:          entry,
+				external_path: entry_external_path,
 			}
 		end
 
