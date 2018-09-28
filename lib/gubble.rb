@@ -13,15 +13,15 @@ class Gubble
 
   def run
     if @request.request_method == 'GET' &&
-       (@request.path == @url_path+'/' || @request.path == @url_path)
+       (@request.path == @url_path + '/' || @request.path == @url_path)
       @response.set_redirect(
         WEBrick::HTTPStatus::TemporaryRedirect,
-        @url_path+"/view?page=#{u('/')}",
+        @url_path + "/view?page=#{u('/')}",
       )
       return
     end
 
-    if @request.request_method == 'GET' && @request.path == @url_path+'/view'
+    if @request.request_method == 'GET' && @request.path == @url_path + '/view'
       view
       return
     end
