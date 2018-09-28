@@ -6,9 +6,7 @@ require 'webrick'
 
 def main
   args = get_args
-  if args.nil?
-    return false
-  end
+  return false if args.nil?
 
   server = WEBrick::HTTPServer.new :Port => args[:port]
   trap 'INT' do server.shutdown end
