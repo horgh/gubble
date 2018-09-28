@@ -33,22 +33,25 @@ class HTTPResponse
 end
 
 class GubbleTest < Minitest::Test
+  def setup
+    @request = HTTPRequest.new('GET', '/')
+    @response = HTTPResponse.new
+    @gubble = Gubble.new('', 'test/data', 'templates', @request, @response)
+  end
+
   def test_index_redirects_to_root
-    request = HTTPRequest.new('GET', '/')
-    response = HTTPResponse.new
-    Gubble.new('', 'test/data', 'templates', request, response).run
-    assert_equal 307, response.status
-    assert_equal '/view?page=%2F', response['Location']
+    @gubble.run
+    assert_equal 307, @response.status
+    assert_equal '/view?page=%2F', @response['Location']
   end
 
   def test_index
-    request = HTTPRequest.new('GET', '/view')
-    request.query['page'] = '/'
-    response = HTTPResponse.new
-    Gubble.new('', 'test/data', 'templates', request, response).run
-    assert_equal 200, response.status
+    @request.path = '/view'
+    @request.query['page'] = '/'
+    @gubble.run
+    assert_equal 200, @response.status
     links = []
-    doc = Nokogiri::HTML(response.body)
+    doc = Nokogiri::HTML(@response.body)
     doc.css('li a').each do |link|
       links << {
         href:    link['href'],
