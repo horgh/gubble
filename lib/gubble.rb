@@ -26,8 +26,7 @@ class Gubble
 			return
 		end
 
-		@response.status = 400
-		@response.body = 'Invalid request' # TODO(horgh): template
+		render_error(400, 'Invalid request')
 		return
 	end
 
@@ -37,23 +36,20 @@ class Gubble
 		external_path = @request.query()['page']
 
 		if external_path.nil?
-			@response.status = 400
-			@response.body = 'No page given' # TODO(horgh): template
+			render_error(400, 'No page specified')
 			return
 		end
 
 		external_path = normalize_path(external_path)
 		if external_path.nil?
-			@response.status = 400
-			@response.body = 'Invalid file' # TODO(horgh): template
+			render_error(400, 'Invalid page')
 			return
 		end
 
 		fs_path = File.join(@data_dir, external_path)
 
 		if !File.exist?(fs_path)
-			@response.status = 404
-			@response.body = 'File not found' # TODO(horgh): template
+			render_error(404, 'Page not found')
 			return
 		end
 
@@ -95,6 +91,13 @@ class Gubble
 		contents = File.read(fs_path)
 		title = external_path
 		render_page('file.rhtml', binding)
+		return
+	end
+
+	def render_error(status, message)
+		@response.status = status
+		title = 'Error'
+		render_page('error.rhtml', binding)
 		return
 	end
 
