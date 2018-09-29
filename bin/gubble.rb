@@ -12,7 +12,7 @@ def main
   trap('INT') { server.shutdown }
   server.mount_proc '/' do |req, res|
     Gubble.new(
-      args[:path],
+      args[:url_path],
       args[:data_dir],
       args[:template_dir],
       req,
@@ -26,17 +26,12 @@ end
 
 def parse_args
   args = {
-    path: '',
     port: 8081,
+    url_path: '/',
   }
   # rubocop:disable Metrics/LineLength
   OptionParser.new do |opts|
     opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
-    opts.on(
-      '-a',
-      '--path PATH',
-      'URL path to Gubble. If you want it to be reachable at /gubble instead of /, use this',
-    ) { |v| args[:path] = v }
     opts.on(
       '-d',
       '--data-dir DIR',
@@ -52,6 +47,11 @@ def parse_args
       '--template-dir DIR',
       'Directory containing template files',
     ) { |v| args[:template_dir] = v }
+    opts.on(
+      '-u',
+      '--url-path PATH',
+      "URL path to Gubble. If you want it to be reachable at /gubble instead of /, use this (defaults to #{args[:url_path]}",
+    ) { |v| args[:url_path] = v }
   end.parse!
   # rubocop:enable Metrics/LineLength
 

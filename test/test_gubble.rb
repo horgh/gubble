@@ -43,13 +43,6 @@ class GubbleTest < Minitest::Test
     @gubble.run
     assert_equal 307, @response.status
     assert_equal '/view?page=%2F', @response['Location']
-
-    setup
-    @request.path = '/prefix'
-    @gubble.url_path = '/prefix'
-    @gubble.run
-    assert_equal 307, @response.status
-    assert_equal '/prefix/view?page=%2F', @response['Location']
   end
 
   def test_index
